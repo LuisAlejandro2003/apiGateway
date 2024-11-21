@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  catalog-service:
+    build:
+      context: ./catalog-service
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - MONGO_URL=mongodb://catalog-db:27017/catalogDB
+    depends_on:
+      - catalog-db
+  shopping-cart-service:
+    build:
+      context: ./shopping-cart-service
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3002"
+    environment:
+      - PORT=3002
+      - MONGO_URL=mongodb://shopping-cart-db:27017/shoppingCartDB
+    depends_on:
+      - shopping-cart-db
+  catalog-db:
+    image: mongo
+    ports:
+      - "27017:27017"
+  shopping-cart-db:
+    image: mongo
+    ports:
+      - "27018:27017"

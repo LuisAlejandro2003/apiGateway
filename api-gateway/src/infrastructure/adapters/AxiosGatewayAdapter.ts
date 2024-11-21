@@ -1,16 +1,20 @@
 import axios from 'axios';
-import { GatewayServicePort } from '../../domain/ports/GatewayServicePort';
 
-export class AxiosGatewayAdapter implements GatewayServicePort {
-  async forwardRequest(serviceUrl: string, method: string, path: string, data: any): Promise<any> {
+export class AxiosGatewayServiceAdapter {
+  async forwardRequest(serviceUrl: string, method: string, path: string, data?: any): Promise<any> {
     try {
       const response = await axios({
-        method,
         url: `${serviceUrl}${path}`,
+        method,
         data,
       });
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
+      console.error('Error in AxiosGatewayServiceAdapter:', error.message);
+      if (error.response) {
+        console.error('Response data:', error.response.data);
+        console.error('Response status:', error.response.status);
+      }
       throw new Error('Service request failed');
     }
   }

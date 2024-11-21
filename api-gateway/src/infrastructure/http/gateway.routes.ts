@@ -1,9 +1,14 @@
-import { Router } from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
 import { GatewayController } from './controllers/gateway.controller';
 
 const router = Router();
 
-router.use('/catalog', GatewayController.forwardToService);
-router.use('/shopping-cart', GatewayController.forwardToService);
+router.use('/api/catalog', (req: Request, res: Response, next: NextFunction) => {
+  GatewayController.forwardToService(req, res).catch(next);
+});
+
+router.use('/shopping-cart', (req: Request, res: Response, next: NextFunction) => {
+  GatewayController.forwardToService(req, res).catch(next);
+});
 
 export default router;
