@@ -1,3 +1,4 @@
+// AxiosGatewayServiceAdapter.ts
 import axios from 'axios';
 
 export class AxiosGatewayServiceAdapter {
@@ -6,7 +7,7 @@ export class AxiosGatewayServiceAdapter {
       const response = await axios({
         url: `${serviceUrl}${path}`,
         method,
-        data,
+        data: data ? data : undefined, // Asegúrate de enviar el `data` solo si está presente
       });
       return response.data;
     } catch (error: any) {

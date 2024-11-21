@@ -13,10 +13,11 @@ export class GatewayController {
 
       let serviceUrl = '';
 
-      if (req.originalUrl.startsWith('/api/catalog')) {
-        serviceUrl = 'http://localhost:3001/api/catalog';
-      } else if (req.originalUrl.startsWith('/shopping-cart')) {
-        serviceUrl = 'http://localhost:3002/shopping-cart';
+      // Adaptar para los nuevos microservicios
+      if (req.originalUrl.startsWith('/api/v1/users')) {
+        serviceUrl = 'http://localhost:3001/api/v1/users';
+      } else if (req.originalUrl.startsWith('/api/v1/payments')) {
+        serviceUrl = 'http://localhost:3002/api/v1/payments';
       }
 
       if (!serviceUrl) {
@@ -27,7 +28,7 @@ export class GatewayController {
       console.log('Forwarding request to service URL:', serviceUrl);
 
       // Deja forwardPath tal como está si ya tiene la estructura correcta
-      const forwardPath = req.originalUrl.replace(/^\/api\/catalog|\/shopping-cart/, '') || '/';
+      const forwardPath = req.originalUrl.replace(/^\/api\/v1\/users|\/api\/v1\/payments/, '') || '/';
       const response = await forwardRequestUseCase.execute(serviceUrl, req.method.toLowerCase(), forwardPath, req.body);
 
       console.log('Response from microservice:', response);

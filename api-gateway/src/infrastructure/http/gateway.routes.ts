@@ -3,11 +3,11 @@ import { GatewayController } from './controllers/gateway.controller';
 
 const router = Router();
 
-router.use('/api/catalog', (req: Request, res: Response, next: NextFunction) => {
+router.use('/api/v1/users', (req: Request, res: Response, next: NextFunction) => {
   GatewayController.forwardToService(req, res).catch(next);
 });
 
-router.use('/shopping-cart', (req: Request, res: Response, next: NextFunction) => {
+router.use('/api/v1/payments', (req: Request, res: Response, next: NextFunction) => {
   GatewayController.forwardToService(req, res).catch(next);
 });
 
